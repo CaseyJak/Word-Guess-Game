@@ -1,8 +1,8 @@
 
 
 
-let wordBank = ["Navi", "Mastersword", "Triforce", "Zelda", "Link", "Hyrule", 
-                "Ganon", "Midna", "Tinkle", "Fi", "Power", "Courage", "Wisdom"];              
+let wordBank = ["navi", "mastersword", "triforce", "zelda", "link", "hyrule", 
+                "ganon", "midna", "tinkle", "fi", "power", "courage", "wisdom"];              
 
 
 
@@ -24,7 +24,6 @@ window.onload = function setGame(){
 
     console.log("randomWord: " + randomWord);
     console.log("gameAnswer: " + gameAnswer);
-    console.log("blankAnswer: " + blankAnswer);
 
     // User Game Loop
 
@@ -35,20 +34,30 @@ window.onload = function setGame(){
         "s", "t", "u", "v", "w", "x", "y", "z"]
         let userGuess = event.key;
             if (alpha.includes(userGuess)) {
+                chances--;
+                wrong.push(userGuess);
                 for ( let i=0; i<gameAnswer.length; i++)
                 if (userGuess === gameAnswer[i]){
+                    chances++;
                     blankAnswer[i]= userGuess;
                     document.querySelector(".guessBox").innerHTML = blankAnswer.join(" ");
+                    if (blankAnswer.join("") === randomWord) {
+                        alert("You win! Winning word: " + randomWord);
+                        setGame();
+                    }
                 }
-                else {
-                    wrong=userGuess;
-                    chances--;
-                    console.log("wrong: " +wrong[i]);
-                    console.log("chances: " + chances)
+                console.log("blankAnswer: " + blankAnswer);
+                console.log("gameAnswer: " + gameAnswer);
+                    console.log("wrong: " + wrong);
+                    document.querySelector(".wrong").innerHTML=wrong;
+                    document.querySelector(".chances").innerHTML=chances;
                 }
-            }
             else (alert ("invalid statment"))
-        }
+            if (chances < 1) {
+                alert("You lose!");
+                setGame();
+            }
+    }
 
         /*
         for (let j=0; j<alpha.length;j++)
